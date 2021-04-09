@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link type="text/css" href="static/style.css" rel="stylesheet">
+    <!-- href="{{ url_for('static',filename='style.css')}}" -->
+</head>
+
+<body>
+    <div class="head">
+        歡迎光臨，請註冊登入系統
+    </div>
+    <div class="main">註冊帳號
+        <form action="/signup" method="POST">
+            姓名 <input type="text" name="signup_name">
+            <br>
+            帳號 <input type="text" name="signup_account">
+            <br>
+            密碼 <input type="text" name="signup_password">
+            <br>
+            <button>註冊</button>
+        </form>
+    </div>
+    <hr class="hr">
+    <div class="main">登入系統
+        <form action="/signin" method="POST">
+            帳號 <input type="text" name="signin_account">
+            <br>
+            密碼 <input type="text" name="signin_password">
+            <br>
+            <button>登入</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+
+<body>
+    <div class="head">歡迎光臨，這是會員頁</div>
+    <div class="main">{{ name }}，歡迎登入系統
+        <br>
+        <a href="/signout">登出系統</a>
+    </div>
+    <div class="main">
+        <div class="search">查詢會員姓名</div>
+        <input type="text" id="inputname">
+        <button onclick="getData()">查詢</button>
+        <div id="searchName"></div>
+    </div>
+    <div class="main">
+        <div class="search">更改會員姓名</div>
+        <input type="text" id="updatename">
+        <button onclick="updateData()">更改</button>
+    </div>
+    <script type="text/javascript">
+        function getData() {
+            let inputname = document.getElementById("inputname").value;
+            let xhr = new XMLHttpRequest();
+            xhr.open("get", "/api/users?username=" + inputname);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    let data = JSON.parse(this.responseText);
+                    console.log(data);
+                    let searchName = document.getElementById("searchName");
+                    if (data.data != null) {
+                        let name = data.data.name;
+                        let username = data.data.username;
+                        searchName.textContent = name + " (" + username + ")";
+                    }
+                    else {
+                        searchName.textContent = "";
+                    }
+                }
+            }
+        }
+        function updateData() {
+            let updatename = document.getElementById("updatename").value;
+            let data = { "name": updatename };
+            let url = '/api/user';
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            })
+                .then(res => {
+                    return res.json();
+                }).then(result => {
+                    console.log(result);
+                });
+        }
+    </script>
+</body>
+
+</html>
